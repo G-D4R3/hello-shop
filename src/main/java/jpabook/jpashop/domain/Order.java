@@ -74,6 +74,7 @@ public class Order {
     }
 
     // == 생성 메서드 == //
+    // 실무에서는 훨씬 복잡하며 OrderItem도 그냥 넘어오는 게 아니라 param 등이 복잡하게 들어와서 이 메서드에서 OrderItem을 생성해서 넣게될 수도 있다.
     public static Order createOrder(Member member, Delivery delivery, OrderItem... orderItems) {
         Order order = new Order();
         order.setMember(member);
