@@ -1,4 +1,5 @@
 spring:
+  ##여기부터
   datasource:
   #
     url: jdbc:h2:mem:test # test는 외부 db가 아니라 memory db를 사용하도록. DB 꺼도 됨
@@ -13,6 +14,7 @@ spring:
       hibernate:
 #       show_sql: true sout로 찍는거라 logger로 찍어야 함
         format_sql: true
+        ## 여기까지 없어도 springboot는 알아서 mem으로 연결해서 동작함
 logging:
   level:
     org.hibernate.SQL: debug
