@@ -67,6 +67,9 @@ public class ItemController {
 
         // itemId를 조작해서 넘기는 경우도 있기 때문에 service 등에서 user 권한을 체크하는 부분이 서버에 반드시 필요하다
 
+        /**
+         * merge로 준영속 엔티티 변경 
+         */
         Book book = new Book();
         book.setId(form.getId());
         book.setName(form.getName());
