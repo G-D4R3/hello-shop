@@ -22,7 +22,7 @@ public class ItemService {
     }
 
     @Transactional
-    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
+    public void updateItem(Long itemId, String name, int price, int stockQuantity) { // UpdateItemDto로 만들어서 관리해도 됨
 
         // 영속성 엔티티의 변경감지 사용
         Item findItem = itemRepository.findOne(itemId);
