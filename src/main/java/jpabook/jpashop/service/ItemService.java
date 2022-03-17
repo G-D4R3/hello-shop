@@ -22,18 +22,15 @@ public class ItemService {
     }
 
     @Transactional
-    public Item updateItem(Long itemId, Book book) {
+    public void updateItem(Long itemId, String name, int price, int stockQuantity) {
 
         // 영속성 엔티티의 변경감지 사용
         Item findItem = itemRepository.findOne(itemId);
 
         // findItem.change(price, stockQuantity, name); 등 의미있는 메소드로 작성하는 편이 좋다.
-
-        findItem.setPrice(book.getPrice());
-        findItem.setName(book.getName());
-        findItem.setStockQuantity(book.getStockQuantity());
-
-        return findItem;
+        findItem.setName(name);
+        findItem.setPrice(price);
+        findItem.setStockQuantity(stockQuantity);
     }
 
     public List<Item> findItems() {
