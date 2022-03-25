@@ -27,6 +27,11 @@ public class OrderSimpleApiController {
     public List<Order> ordersV1() {
         List<Order> all = orderRepository.findAllByString(new OrderSearch()); // Order -> Member -> orders -> member -> ... 무한 루프로 에러 따라서 한 쪽에 JsonIgnore를 걸지 않으면 해결이 x
         // 양방향으로 걸려있는 연관관계는 @JsonIgnore을 통해 끊어줘야함
+
+        for (Order order : all) {
+            order.getMember().getName(); //Lazy 강제 초기화
+            order.getDelivery().getAddress(); //Lazy 강제 초기화
+        }
         return all;
     }
 

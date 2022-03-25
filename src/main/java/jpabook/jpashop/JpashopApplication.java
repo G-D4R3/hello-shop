@@ -14,7 +14,8 @@ public class JpashopApplication {
 
 	@Bean
 	Hibernate5Module hibernate5Module() {
-		return new Hibernate5Module();
+		Hibernate5Module hibernate5Module = new Hibernate5Module();
+		return hibernate5Module;
 	}
 
 }

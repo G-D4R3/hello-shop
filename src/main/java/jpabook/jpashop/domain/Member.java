@@ -27,6 +27,7 @@ public class Member {
      * 다른 임의의 메소드에서 컬렉션을 잘못 생성하면 하이버네이트 내부에서 문제가 생길 수도 있다.
      * => 컬렉션은 필드에서 바로 초기화
      */
+    @JsonIgnore // order 조회시 무한루프를 피하기 위해
     @OneToMany(mappedBy = "member") // Order table의 member field에 의해 mapping된 것이다. Order가 연관관계의 주인
     // @JsonIgnore 회원정보만 뿌릴 때.. 근데 Entity 자체를 수정하는 건 안좋음
     private List<Order> orders = new ArrayList<>(); // 초기화에 대해서 nullPointerException이 나는 고민을 하지 않아도 됨.
