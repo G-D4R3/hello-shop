@@ -26,8 +26,13 @@ public class OrderRepository {
         return em.find(Order.class, id);
     }
 
+    public List<Order> findAll() {
+        return em.createQuery("select o from Order o", Order.class)
+                .getResultList();
+    }
+
     // user별 주문 동적쿼리로 find
-    public List<Order> findAll(OrderSearch orderSearch) {
+    public List<Order> findAllByString(OrderSearch orderSearch) {
 
 /* 원래 작성해야 하는 jqpl 동적 쿼리. 심지어 여기서 orderSearch에 null값 판단도 해줘야 함
         return em.createQuery("select o from Order o join o.member m" +
