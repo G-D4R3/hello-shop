@@ -63,7 +63,7 @@ public class OrderApiController {
         private LocalDateTime orderDate;
         private OrderStatus orderStatus;
         private Address address;
-        private List<OrderItem> orderItems; // Dto 안에 Entity가 있으면 안됨! 어쨌든 Entity가 외부로 노출되기 때문
+        private List<OrderItemDto> orderItems; // Dto 안에 Entity가 있으면 안됨! 어쨌든 Entity가 외부로 노출되기 때문
         // Entity 의존을 완전히 끊어야 한다.
 
         public OrderDto(Order order) {
@@ -72,8 +72,22 @@ public class OrderApiController {
             orderDate = order.getOrderDate();
             orderStatus = order.getStatus();
             address = order.getDelivery().getAddress();
-            order.getOrderItems().stream().forEach(o->o.getItem().getName());
-            orderItems = order.getOrderItems(); // Entity이기 때문에 LAZY 초기화 안해주면 안나옴
+            orderItems = order.getOrderItems().stream()
+                    .map(orderItem -> new OrderItemDto(orderItem))
+                    .collect(Collectors.toList());
+        }
+    }
+
+    @Getter
+    static class OrderItemDto {
+        private String itemName;
+        private int orderPrice;
+        private int count;
+
+        public OrderItemDto(OrderItem orderItem) {
+            itemName = orderItem.getItem().getName();
+            orderPrice = orderItem.getOrderPrice();
+            count = orderItem.getCount();
         }
     }
 }
