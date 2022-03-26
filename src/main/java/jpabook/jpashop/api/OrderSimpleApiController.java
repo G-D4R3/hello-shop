@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.toList;
+
 /**
  * X to One (Many To One과 One To One에서의 성능 최적화)
  * Order 조회
@@ -48,7 +50,17 @@ public class OrderSimpleApiController {
         // 지연로딩은 영속성 컨텍스트에서 조회하므로, 이미 조회된 경우 쿼리를 생략한다.
         List<SimpleOrderDto> result = orders.stream()
                 .map(o -> new SimpleOrderDto(o)) // map(SimpleOrderDto::new)
-                .collect(Collectors.toList());
+                .collect(toList());
+        return result;
+    }
+
+    @GetMapping("/api/v3/simple-orders")
+    public List<SimpleOrderDto> ordersV3() {
+        List<Order> orders = orderRepository.findAllWithMemberDelivery();
+
+        List<SimpleOrderDto> result = orders.stream()
+                .map(o -> new SimpleOrderDto(o))
+                .collect(toList());
         return result;
     }
 
