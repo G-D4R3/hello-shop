@@ -5,6 +5,7 @@ import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderSearch;
 import jpabook.jpashop.domain.OrderStatus;
 import jpabook.jpashop.repository.OrderRepository;
+import jpabook.jpashop.repository.OrderSimpleQueryDto;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,6 +63,20 @@ public class OrderSimpleApiController {
                 .map(o -> new SimpleOrderDto(o))
                 .collect(toList());
         return result;
+    }
+
+    @GetMapping("/api/v4/simple-orders")
+    public List<OrderSimpleQueryDto> ordersV4() {
+
+        /**
+         * api spec이 repository에 들어가버렸다
+         * v3까지는 사용해도 Entity의 순수성이 유지가 된다.
+         * v4는 논리적으로는 계층이 깨지게 된다. => api를 고치면 repository 코드를 고쳐야 하기 때문
+         * 하지만 성능상으로 v4가 좀 더 괜찮다.
+         * trade off로 선택해야함.. 성능 테스트로 더 괜찮은 것을 고른다.
+         * (대부분의 성능은 join에서 크게 걸린다. 지금은 별 차이가 없다.)
+         */
+        return orderRepository.findOrderDtos();
     }
 
     @Data

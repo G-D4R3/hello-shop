@@ -1,5 +1,6 @@
 package jpabook.jpashop.repository;
 
+import jpabook.jpashop.api.OrderSimpleApiController;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderSearch;
 import lombok.RequiredArgsConstructor;
@@ -80,5 +81,16 @@ public class OrderRepository {
                 " join fetch o.member m" +
                 " join fetch o.delivery d", Order.class)
                 .getResultList();
+    }
+
+    // dto로 조회했기 때문에 재사용할 수 없음
+    // api spec이 repository에 들어와버렸다.
+    // query용 package를 새로 만들어서 하면 ㄱㅊ -> order.simplequery
+    public List<OrderSimpleQueryDto> findOrderDtos() {
+        return em.createQuery("select new jpabook.jpashop.repository.OrderSimpleQueryDto(o.id, m.name, o.orderDate, o.status, d.address)" +
+                        " from Order o" +
+                        " join o.member m" +
+                        " join o.delivery d", OrderSimpleQueryDto.class)
+                        .getResultList();
     }
 }
