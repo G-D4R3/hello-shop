@@ -4,9 +4,9 @@ import jpabook.jpashop.domain.*;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
+import jpabook.jpashop.repository.MemberRepositoryOld;
 import jpabook.jpashop.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +26,7 @@ public class OrderService {
     public Long order(Long memberId, Long itemId, int count) {
 
         // 엔티티 조회
-        Member member = memberRepository.findOne(memberId);
+        Member member = memberRepository.findById(memberId).get(); // 원래는 getOr어쩌고 써야함
         Item item = itemRepository.findOne(itemId);
 
         // 배송정보 생성
