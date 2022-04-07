@@ -28,9 +28,7 @@ public class MemberController {
     @PostMapping(value = "/members/new")
     public String create(@Valid MemberForm memberForm, BindingResult result) { // javax.validation 적용, valid 오류가 있다면 BindingResult에 담겨서 실행. 에러를 화면에 뿌릴 수 있다.
 
-        if(result.hasErrors()) { // BindingResult에 에러를 핸들링할 수 있는 메소드가 매우 많다.
-            return "members/createMemberForm";
-        }
+
         Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
         Member member = new Member();
         member.setName(memberForm.getName());
